@@ -256,7 +256,6 @@ export class Mesh {
     const SCALE = 100;
     const g = this.geometry;
     const m = new THREE.MeshLambertMaterial({
-      // color: new THREE.Color("#eef0f4"),
       color: new THREE.Color("#fff"),
       side: THREE.FrontSide,
     });
