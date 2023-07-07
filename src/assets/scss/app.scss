@@ -1,0 +1,295 @@
+@use "./global/app" as *;
+
+// foundation
+@use "./foundation/root";
+@use "./foundation/reset";
+
+// utility
+@use "./other/utility";
+
+// --------------------------
+
+html,
+body {
+  overflow: hidden;
+}
+
+body {
+  &[data-status=""] {
+    cursor: wait;
+  }
+  &[data-hover="1"] {
+    cursor: pointer;
+  }
+}
+
+// --------------------------
+
+// WebGLコンテナ
+
+// --------------------------
+#world {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+// --------------------------
+
+// ローディング
+
+// --------------------------
+.l-loading {
+  pointer-events: none;
+  user-select: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  opacity: 1;
+  background: #fff;
+  body[data-loaded="1"] & {
+    transition: 1s ease opacity;
+    opacity: 0;
+  }
+}
+.l-loading__gif {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  margin: auto;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+// --------------------------
+
+// タイトル
+
+// --------------------------
+.c-title {
+  pointer-events: none;
+  user-select: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 100;
+  @include sp_w() {
+    top: 12px;
+    left: 12px;
+  }
+
+  opacity: 0;
+  body[data-status="enter"] & {
+    transition: 0.6s 0s ease opacity;
+    opacity: 1;
+  }
+}
+.c-title__row {
+  display: block;
+  font-size: 54px;
+  font-weight: 900;
+  line-height: 120%;
+  letter-spacing: -2px;
+  color: var(--black);
+  @include sp_w() {
+    font-size: clamp(liquid(32), liquid(32), 32px);
+  }
+  &:nth-of-type(2) {
+    font-size: 36px;
+    @include sp_w() {
+      font-size: clamp(liquid(24), liquid(24), 24px);
+    }
+  }
+}
+
+// --------------------------
+
+// 閉じるボタン
+
+// --------------------------
+.c-btnClose {
+  user-select: none;
+  cursor: pointer;
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  z-index: 100;
+  width: 120px;
+  height: 40px;
+  background: var(--white);
+  border: solid var(--black) 2px;
+  padding: 0;
+  margin: 0;
+
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  body[data-status="enter"] & {
+    transition: $hoverTime $hoverEase opacity;
+  }
+
+  @include sp_w() {
+    bottom: 12px;
+    left: 12px;
+    width: 100px;
+    height: 32px;
+  }
+
+  &::before {
+    pointer-events: none;
+    user-select: none;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    background: var(--black);
+    transform: scale(0, 1);
+    transform-origin: left;
+    transition: $hoverTime $hoverEase transform;
+  }
+  body[data-zoom="1"] & {
+    pointer-events: initial;
+    user-select: initial;
+    opacity: 1;
+  }
+  @include hover() {
+    &::before {
+      transform: scale(1, 1);
+    }
+  }
+}
+.c-btnClose__text {
+  pointer-events: none;
+  user-select: none;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  line-height: 100%;
+  font-family: var(--ja);
+  font-weight: 900;
+  font-size: 12px;
+  color: var(--white);
+  mix-blend-mode: difference;
+  @include sp_w() {
+    font-size: 10px;
+  }
+}
+
+// --------------------------
+
+// コピーライト
+
+// --------------------------
+.c-copyright {
+  user-select: none;
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 2000;
+  display: block;
+  font-size: 12px;
+  font-family: var(--ja);
+  line-height: 100%;
+  font-weight: bold;
+  width: max-content;
+  color: var(--black);
+  @include sp_w() {
+    bottom: 12px;
+    right: 12px;
+  }
+  &::before {
+    pointer-events: none;
+    user-select: none;
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    z-index: 0;
+    transform: translate3d(0, 0, 0px);
+    height: 2px;
+    width: 100%;
+    background: var(--black);
+    transform: scale(0, 1);
+    transform-origin: left;
+    transition: 0.4s $easeinout transform;
+    @include sp_w() {
+      bottom: -4px;
+    }
+  }
+  @include hover() {
+    &::before {
+      transform: scale(1, 1);
+    }
+  }
+  opacity: 0;
+  body[data-status="enter"] & {
+    transition: 0.6s ease opacity;
+    opacity: 1;
+  }
+}
+
+// --------------------------
+
+// GitHub
+
+// --------------------------
+.c-github {
+  user-select: none;
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  @include sp_w() {
+    top: 12px;
+    right: 12px;
+  }
+  svg {
+    pointer-events: none;
+    user-select: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  opacity: 0;
+  body[data-status="enter"] & {
+    transition: 0.4s ease opacity;
+    opacity: 1;
+    @include hover() {
+      opacity: 0.5;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "env_toy-vite",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --mode development",
+    "build": "vite build --mode production",
+    "preview": "vite preview --mode production"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "dotenv": "^16.0.3",
+    "postcss": "^8.4.20",
+    "sass": "^1.57.1",
+    "vite": "^4.0.0",
+    "vite-plugin-glsl": "^1.0.2"
+  },
+  "dependencies": {
+    "gsap": "^3.11.4",
+    "three": "^0.154.0"
+  }
+}
